@@ -1,3 +1,5 @@
+#Module VPC
+
 module "vpc" {
   source                  = "./modules/vpc"
   r_private_subnet_cidr_1 = var.m_private_subnet_cidr_1
@@ -5,6 +7,8 @@ module "vpc" {
   r_vpc_cidr              = var.m_vpc_cidr
   r_public_subnet_cidr    = var.m_public_subnet_cidr
 }
+
+#Module EC2 INSTANCE
 
 module "ec2" {
   source             = "./modules/ec2"
@@ -14,6 +18,7 @@ module "ec2" {
   r_vpc_id           = module.vpc.vpc_id
 }
 
+#Module ELASTIC LOAD BALANCER
 module "elb" {
   source             = "./modules/elb"
   r_public_subnet_id = module.vpc.public_subnet_id
@@ -21,6 +26,7 @@ module "elb" {
   r_web_sg_id        = module.ec2.web_sg_id
 }
 
+#Module RELATINAL DATABSE SYSTEM
 module "rds" {
   source                = "./modules/rds"
   r_db_instance_class   = var.m_db_instance_class
